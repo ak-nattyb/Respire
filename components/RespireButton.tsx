@@ -1,7 +1,7 @@
 import { HapticPressable } from "@/components/HapticPressable";
 import { StyledText } from "@/components/StyledText";
 import { n } from "@/utils/scaling";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Animated, Pressable } from "react-native";
 
 interface RespireButtonProps {
@@ -13,24 +13,104 @@ export default function RespireButton({
   packName,
   packColor,
 }: RespireButtonProps) {
-  const breathAnim = useRef(new Animated.Value(1)).current;
+  const breathAnim = useRef(new Animated.Value(0.5)).current;
+  const [centerText, setCenterText] = useState(packName);
 
-  function breathOutAnim() {
-    //breathAnim.stopAnimation();
-    Animated.timing(breathAnim, {
-      toValue: 0,
-      duration: 8000,
-      useNativeDriver: false,
-    }).start();
-  }
-
-  function breathInAnim() {
-    //breathAnim.stopAnimation();
-    Animated.timing(breathAnim, {
-      toValue: 1,
-      duration: 8000,
-      useNativeDriver: false,
-    }).start();
+  function breathingSequenceAnim() {
+    Animated.sequence([
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 4000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 1,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 1,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 1,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 1,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 1,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 1,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 1,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 1,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 8000,
+        useNativeDriver: false,
+      }),
+      Animated.timing(breathAnim, {
+        toValue: 0,
+        duration: 4000,
+        useNativeDriver: false,
+      }),
+    ]).start(({ finished }) => {
+      console.log("well done");
+    });
   }
 
   const buttonSize = breathAnim.interpolate({
@@ -45,8 +125,8 @@ export default function RespireButton({
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={breathOutAnim}>
-        <View
+      <Pressable onPress={breathingSequenceAnim}>
+        <Animated.View
           style={[
             styles.circle,
             {
@@ -56,8 +136,8 @@ export default function RespireButton({
             },
           ]}
         >
-          <StyledText style={styles.text}>{packName}</StyledText>
-        </View>
+          <StyledText style={styles.text}>{centerText}</StyledText>
+        </Animated.View>
       </Pressable>
     </View>
   );
